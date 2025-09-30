@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const RoomController_1 = require("../controllers/RoomController");
+const roomRoutes = (0, express_1.Router)();
+const roomController = new RoomController_1.RoomController();
+roomRoutes.post('/', (req, res) => roomController.createRoom(req, res));
+roomRoutes.get('/', (req, res) => roomController.getAllRooms(req, res));
+roomRoutes.get('/:id', (req, res) => roomController.getRoomById(req, res));
+roomRoutes.put('/:id', (req, res) => roomController.updateRoom(req, res));
+roomRoutes.delete('/:id', (req, res) => roomController.deleteRoom(req, res));
+exports.default = roomRoutes;

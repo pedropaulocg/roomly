@@ -20,7 +20,10 @@ export class RoomController {
 
   async createRoom(req: Request, res: Response) {
     const data = req.body as RoomRequest;
-    const room = await this.roomServices.createRoom(data);
+    const room = await this.roomServices.createRoom({
+      ...data,
+      photo: data.photo || null,
+    });
     res.status(201).json(room);
   }
 
@@ -38,7 +41,10 @@ export class RoomController {
   async updateRoom(req: Request, res: Response) {
     const { id } = req.params;
     const data = req.body as RoomRequest;
-    const room = await this.roomServices.updateRoom(Number(id), data);
+    const room = await this.roomServices.updateRoom(Number(id), {
+      ...data,
+      photo: data.photo || null,
+    });
     res.status(200).json(room);
   }
 

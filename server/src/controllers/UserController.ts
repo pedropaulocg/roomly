@@ -7,7 +7,7 @@ type UserRequest = {
   email: string;
   password: string;
   role: UserRole;
-}
+};
 
 export class UserController {
   private userServices: UserServices;
@@ -18,28 +18,38 @@ export class UserController {
 
   async createUser(req: Request, res: Response) {
     const { name, email, password, role } = req.body as UserRequest;
-    const user = await this.userServices.createUser({ name, email, password, role });
+    const user: IUser = await this.userServices.createUser({
+      name,
+      email,
+      password,
+      role,
+    });
     res.status(201).json(user);
   }
 
   async getAllUsers(req: Request, res: Response) {
-    const users = await this.userServices.getAllUsers();
+    const users: IUser[] = await this.userServices.getAllUsers();
     res.status(200).json(users);
   }
-  
+
   async getUserById(req: Request, res: Response) {
     const { id } = req.params;
-    const user = await this.userServices.getUserById(Number(id));
+    const user: IUser | null = await this.userServices.getUserById(Number(id));
     res.status(200).json(user);
   }
-  
+
   async updateUser(req: Request, res: Response) {
     const { id } = req.params;
     const { name, email, password, role } = req.body as UserRequest;
-    const user = await this.userServices.updateUser(Number(id), { name, email, password, role });
+    const user: IUser | null = await this.userServices.updateUser(Number(id), {
+      name,
+      email,
+      password,
+      role,
+    });
     res.status(200).json(user);
   }
-  
+
   async deleteUser(req: Request, res: Response) {
     const { id } = req.params;
     await this.userServices.deleteUser(Number(id));

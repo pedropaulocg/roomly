@@ -2,6 +2,14 @@ import { IUser } from "../models/User";
 import { UserRepository } from "../repositories/UserRepository";
 import bcrypt from "bcrypt";
 
+type UserCreateData = Omit<
+  IUser,
+  "id" | "createdAt" | "updatedAt" | "rooms" | "reservations"
+>;
+type UserUpdateData = Omit<
+  IUser,
+  "id" | "createdAt" | "updatedAt" | "rooms" | "reservations"
+>;
 
 export class UserServices {
   private userRepository: UserRepository;
@@ -10,7 +18,7 @@ export class UserServices {
     this.userRepository = new UserRepository();
   }
 
-  async createUser(user: Omit<IUser, "id" | "createdAt" | "updatedAt">): Promise<IUser> {
+  async createUser(user: UserCreateData): Promise<IUser> {
     const existingUser = await this.userRepository.findByEmail(user.email);
     if (existingUser) {
       throw new Error("User already exists");
@@ -29,7 +37,7 @@ export class UserServices {
     return this.userRepository.findById(id);
   }
 
-  async updateUser(id: number, user: Omit<IUser, "id" | "createdAt" | "updatedAt">): Promise<IUser> {
+  async updateUser(id: number, user: UserUpdateData): Promise<IUser> {
     return this.userRepository.update(id, user);
   }
 
