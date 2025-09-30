@@ -1,5 +1,5 @@
 {
-  "name": "roomly",
+  "name": "roomly-backend",
   "version": "1.0.0",
   "main": "dist/server.js",
   "scripts": {
@@ -9,12 +9,16 @@
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:reset": "prisma migrate reset",
-    "lint": "eslint 'src/**/*.{ts,js}'"
+    "prisma:studio": "prisma studio",
+    "lint": "eslint 'src/**/*.{ts,js}'",
+    "type-check": "tsc --noEmit",
+    "setup": "npm install && prisma generate && prisma migrate dev",
+    "logs": "tail -f logs/combined.log"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "Roomly - Sistema de Reservas de Salas",
   "dependencies": {
     "@prisma/client": "^6.16.2",
     "bcrypt": "^6.0.0",

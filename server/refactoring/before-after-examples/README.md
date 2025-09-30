@@ -1,6 +1,6 @@
 # Exemplos de Refatoração Antes-Depois
 
-Este diretório contém exemplos concretos de técnicas de refatoração aplicadas ao projeto RoomEase, demonstrando a transformação de code smells em código limpo e manutenível.
+Este diretório contém exemplos concretos de técnicas de refatoração aplicadas ao projeto Roomly, demonstrando a transformação de code smells em código limpo e manutenível.
 
 ## Estrutura do Diretório
 

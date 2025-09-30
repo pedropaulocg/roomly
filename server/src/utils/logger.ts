@@ -12,7 +12,7 @@ const logger = winston.createLogger({
     winston.format.errors({ stack: true }),
     winston.format.json()
   ),
-  defaultMeta: { service: "room-ease-api" },
+  defaultMeta: { service: "roomly-api" },
   transports: [
     new winston.transports.Console({
       format: winston.format.combine(
