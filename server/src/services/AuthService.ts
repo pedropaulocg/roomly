@@ -2,9 +2,11 @@ import { TokenService } from "../helpers/TokenService";
 import { UserRepository } from "../repositories/UserRepository";
 import bcrypt from "bcrypt";
 
-
 export class AuthService {
-  constructor(private readonly tokenService: TokenService, private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly tokenService: TokenService,
+    private readonly userRepository: UserRepository
+  ) {}
 
   async login(email: string, password: string) {
     const user = await this.userRepository.findByEmail(email);
@@ -25,7 +27,7 @@ export class AuthService {
         name: user.name,
         email: user.email,
         role: user.role,
-      }
+      },
     };
   }
 }

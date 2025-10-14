@@ -1,5 +1,9 @@
 // api.ts
-import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from "axios";
+import axios, {
+  type AxiosInstance,
+  type AxiosRequestConfig,
+  type AxiosResponse,
+} from "axios";
 
 const service = () => {
   const tokenAuth = localStorage.getItem("token");
@@ -25,20 +29,20 @@ const service = () => {
   );
 
   api.interceptors.response.use(
-    response => response,
-    error => {
-      if (error.response.status === 401) {
+    (response) => response,
+    (error) => {
+      if (error.response?.status === 401) {
         localStorage.removeItem("token");
-        window.location.href = "/login";
+        localStorage.removeItem("user");
+        if (window.location.pathname !== "/login") {
+          window.location.href = "/login";
+        }
       }
       return Promise.reject(error);
     }
-
-
   );
 
   return api;
-}
-
+};
 
 export default service;

@@ -1,9 +1,21 @@
-import service from "./service"
+import service from "./service";
 
-const request = async ({url, method, data, params, headers = {}}: {url: string, method: string, data?: any, params?: any, headers?: any}): Promise<any> => {
+const request = async ({
+  url,
+  method,
+  data,
+  params,
+  headers = {},
+}: {
+  url: string;
+  method: string;
+  data?: any;
+  params?: any;
+  headers?: any;
+}): Promise<any> => {
   const api = service();
 
-    const requestConfig = {
+  const requestConfig = {
     url,
     params,
     method,
@@ -20,6 +32,6 @@ const request = async ({url, method, data, params, headers = {}}: {url: string, 
   } catch (error) {
     return Promise.reject(error);
   }
-}
+};
 
 export default request;

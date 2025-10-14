@@ -66,8 +66,4 @@ export async function connectDB() {
   }
 }
 
-process.on("beforeExit", async () => {
-  logger.info("Desconectando do banco de dados...");
-  await prisma.$disconnect();
-  logger.info("Banco de dados desconectado");
-});
+// Graceful shutdown will be handled in app.ts

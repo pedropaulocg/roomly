@@ -1,5 +1,3 @@
-// use interface to decouple from Prisma
-
 export interface IRoom {
   id: number;
   name: string;

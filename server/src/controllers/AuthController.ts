@@ -4,7 +4,7 @@ import { Request, Response } from "express";
 type AuthRequest = {
   email: string;
   password: string;
-}
+};
 
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
