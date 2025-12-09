@@ -11,6 +11,7 @@ require("dotenv/config");
 const routes_1 = __importDefault(require("./routes"));
 const morgan_1 = __importDefault(require("morgan"));
 const logger_1 = require("./utils/logger");
+const prisma_1 = require("./config/prisma");
 class App {
     app;
     port;
@@ -61,12 +62,26 @@ class App {
         this.setupGracefulShutdown(server);
     }
     setupGracefulShutdown(server) {
-        const shutdown = () => {
+        const shutdown = async () => {
             logger_1.logger.info("🔻 Encerrando servidor...");
-            server.close(() => {
-                logger_1.logger.info("Servidor encerrado com sucesso");
-                process.exit(0);
-            });
+            try {
+                // Close the HTTP server first
+                server.close(async () => {
+                    logger_1.logger.info("Servidor HTTP encerrado");
+                    // Then disconnect from the database
+                    logger_1.logger.info("Desconectando do banco de dados...");
+                    await prisma_1.prisma.$disconnect();
+                    logger_1.logger.info("Banco de dados desconectado");
+                    logger_1.logger.info("Servidor encerrado com sucesso");
+                    process.exit(0);
+                });
+            }
+            catch (error) {
+                logger_1.logger.error("Erro durante o encerramento:", {
+                    error: error instanceof Error ? error.message : String(error),
+                });
+                process.exit(1);
+            }
         };
         process.on("SIGINT", shutdown);
         process.on("SIGTERM", shutdown);

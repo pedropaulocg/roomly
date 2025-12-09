@@ -64,8 +64,7 @@ async function connectDB() {
         process.exit(1);
     }
 }
+// Graceful shutdown - desconectar Prisma quando o processo encerrar
 process.on("beforeExit", async () => {
-    logger_1.logger.info("Desconectando do banco de dados...");
     await exports.prisma.$disconnect();
-    logger_1.logger.info("Banco de dados desconectado");
 });

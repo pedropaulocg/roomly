@@ -58,6 +58,8 @@ model Reservation {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([roomId, startDate, endDate], name: "Reservation_roomId_startDate_endDate_idx")
 }
 
 enum UserRole {

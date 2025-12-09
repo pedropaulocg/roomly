@@ -12,7 +12,7 @@ const logger = winston_1.default.createLogger({
     format: winston_1.default.format.combine(winston_1.default.format.timestamp({
         format: "YYYY-MM-DD HH:mm:ss",
     }), winston_1.default.format.errors({ stack: true }), winston_1.default.format.json()),
-    defaultMeta: { service: "room-ease-api" },
+    defaultMeta: { service: "roomly-api" },
     transports: [
         new winston_1.default.transports.Console({
             format: winston_1.default.format.combine(winston_1.default.format.colorize(), winston_1.default.format.simple()),
@@ -27,8 +27,3 @@ const logger = winston_1.default.createLogger({
     ],
 });
 exports.logger = logger;
-if (process.env.NODE_ENV !== "production") {
-    logger.add(new winston_1.default.transports.Console({
-        format: winston_1.default.format.combine(winston_1.default.format.colorize(), winston_1.default.format.simple()),
-    }));
-}

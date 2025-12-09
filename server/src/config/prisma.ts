@@ -22,7 +22,6 @@ export const prisma = new PrismaClient({
   ],
 });
 
-// Configurar listeners para logs do Prisma
 prisma.$on("query", (e) => {
   logger.debug("Query do banco de dados executada", {
     query: e.query,
@@ -66,4 +65,6 @@ export async function connectDB() {
   }
 }
 
-// Graceful shutdown will be handled in app.ts
+process.on("beforeExit", async () => {
+  await prisma.$disconnect();
+});

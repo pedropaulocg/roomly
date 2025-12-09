@@ -22,8 +22,25 @@ class UserServices {
     async getAllUsers() {
         return this.userRepository.findAll();
     }
-    async getUserById(id) {
-        return this.userRepository.findById(id);
+    async getUserById(id, options) {
+        const user = await this.userRepository.findById(id, options);
+        // Se useSelect não foi usado e temos relacionamentos, serializar para remover referências circulares
+        if (user && !options?.useSelect && (options?.includeRooms || options?.includeReservations)) {
+            return JSON.parse(JSON.stringify(user, (key, value) => {
+                // Remover referências circulares
+                if (key === 'owner' && value?.rooms) {
+                    return { id: value.id, name: value.name };
+                }
+                if (key === 'client' && value?.reservations) {
+                    return { id: value.id, name: value.name };
+                }
+                if (key === 'room' && value?.reservations) {
+                    return { id: value.id, name: value.name };
+                }
+                return value;
+            }));
+        }
+        return user;
     }
     async updateUser(id, user) {
         return this.userRepository.update(id, user);
